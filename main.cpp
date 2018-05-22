@@ -111,35 +111,19 @@ double getBrightness(RGBQUAD color) {
 
 void Threshold (UINT size, RGBQUAD* colour, char* col){
     RGBQUAD black = {0,0,0,0};
+    RGBQUAD white = {255,255,255,0};
     for ( int i = 0; i < 256; i++ ) {
         RGBQUAD tmp;
         // tmp = getBrightness(colour[i]) >= 100 ? black : colour[i];
-        if(getBrightness(colour[i]) >= 100) tmp = black;
-        else tmp = colour[i];
+        if(getBrightness(colour[i]) >= 150) tmp = black;
+        else tmp = white;
         setDAC(i, tmp);
     }
 
     toScreen(size, col);
 }
 
-void Contrast(UINT size, RGBQUAD* colour, char* col){
-    int sum = 0;
-    for (int i=0; i<256; i++){
-        sum += getBrightness(colour[i]);
-    }
 
-    double avg = sum / 256;
-    double mod = (-avg);
-    for (int j=0; j<256; j++) {
-        RGBQUAD tmp = colour[i];
-        tmp.Red = Brighten((int) (tmp.Red*100), mod);
-        tmp.Green = Brighten((int)(tmp.Green*100), mod);
-        tmp.Blue = Brighten((int)(tmp.Blue*100), mod);
-        setDAC(j, tmp);
-    }
-
-    toScreen(size, col);
-}
 
 void main(){
 
@@ -197,18 +181,13 @@ void main(){
                 break;
             }
             case 5:{
-                Contrast(size, colour, picture);
-                getchar();
-                break;
-            }
-            case 6:{
                 break;
             }
         }
 
         setMode(TEXT);
 
-    }while(wybor!=6);
+    }while(wybor!=5);
 
     fclose(file);
     
