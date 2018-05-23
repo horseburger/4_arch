@@ -2,7 +2,6 @@
 #include <dos.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <conio.h>
 #include <math.h>
 
@@ -114,8 +113,7 @@ void Threshold (UINT size, RGBQUAD* colour, char* col){
     RGBQUAD white = {255,255,255,0};
     for ( int i = 0; i < 256; i++ ) {
         RGBQUAD tmp;
-        // tmp = getBrightness(colour[i]) >= 100 ? black : colour[i];
-        if(getBrightness(colour[i]) >= 150) tmp = black;
+        if(getBrightness(colour[i]) >= 100) tmp = black;
         else tmp = white;
         setDAC(i, tmp);
     }
